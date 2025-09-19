@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bangalore Bites - Your Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f7f3e9;
+            color: #333;
+        }
+
+        .active-nav {
+            border-bottom: 2px solid #e53e3e;
+        }
+
+        .cart-item.animate-in {
+            animation: fadeIn 0.8s forwards;
+        }
+
+        header {
+    width: 100%;
+    height: 5.5em;
+    background-color: rgb(2, 24, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.logo-area {
+    height: max-content;
+    width: 50%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 2em;
+}
+.logo{
+    height: 5em;
+    width: 50%;
+    background-image: url("images/homepage/logo.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.nav-area {
+    height: max-content;
+    width: 30em;
+}
+.nav-options {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.nav {
+    color: #dfc9c2;
+    font-size: 1.1em;
+    padding: 1em 1em;
+    transition: all 0.3s ease;
+    font-family: 'Times New Roman', Times, serif;
+}
+.nav:hover {
+    border: 1px solid white;
+}
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#f7f3e9]">
+
+    <header>
+        <div class="logo-area">
+            <div class="logo">
+            </div>
+        </div>
+        <div class="nav-area">
+            <div class="nav-options">
+                <a href="homepage.html" class="nav" id="home" target="_self">Home</a>
+                <a href="menu.html" class="nav" id="menu" target="_self">Menu</a>
+                <a href="cart.html" class="nav" id="contact" style="text-decoration: underline 3px; text-underline-offset: 6px">Cart</a>
+                <a href="my_orders.html" class="nav" id=""><div class="login">Your Orders</div></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section class="text-center py-8">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-red-600 mb-2">Your Cart</h2>
+            <p class="text-lg text-gray-600">Review your order before checking out.</p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div id="cart-items-container" class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 min-h-[400px]">
+                <div id="empty-cart-message" class="text-center py-20 text-gray-500 text-lg hidden">
+                    Your cart is empty. <br> Time to add some delicious food! <br> <a href="ordering.html" style="color: red; text-decoration: 2px underline; text-underline-offset: 3px; font-weight: bold;">Menu</a>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 self-start sticky top-28">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Order Summary</h3>
+                <div class="space-y-2 text-gray-600">
+                    <div class="flex justify-between">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Taxes (10%):</span>
+                        <span id="taxes">₹0.00</span>
+                    </div>
+                    <div class="border-t border-gray-300 my-4 pt-4"></div>
+                    <div class="flex justify-between text-xl font-bold text-gray-800">
+                        <span>Grand Total:</span>
+                        <span id="grand-total">₹0.00</span>
+                    </div>
+                </div>
+                <!-- Updated button to be a link -->
+                <a href="checkout.html" id="checkout-btn" class="block text-center w-full mt-6 bg-red-600 text-white font-semibold py-3 rounded-full shadow-md transition-all hover:bg-red-700 disabled:bg-gray-400">
+                    Proceed to Checkout
+                </a>
+                <button id="clear-cart-btn" class="w-full mt-2 bg-gray-200 text-gray-700 font-semibold py-3 rounded-full shadow-md transition-all hover:bg-gray-300">
+                    Clear Cart
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+        <div class="container mx-auto">
+            <p>&copy; 2024 The Bangalore Bites. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartCountDisplay = document.getElementById('cart-count');
+        const subtotalDisplay = document.getElementById('subtotal');
+        const taxesDisplay = document.getElementById('taxes');
+        const grandTotalDisplay = document.getElementById('grand-total');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const clearCartBtn = document.getElementById('clear-cart-btn');
+
+        const getLocalStorageItem = (key) => {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : [];
+        };
+
+        const setLocalStorageItem = (key, data) => {
+            localStorage.setItem(key, JSON.stringify(data));
+        };
+
+        const updateCartCount = () => {
+            const cart = getLocalStorageItem('cart');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountDisplay.textContent = totalItems;
+        };
+
+        const calculateTotals = (cart) => {
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            const taxes = subtotal * 0.10;
+            const grandTotal = subtotal + taxes;
+
+            subtotalDisplay.textContent = `₹${subtotal.toFixed(2)}`;
+            taxesDisplay.textContent = `₹${taxes.toFixed(2)}`;
+            grandTotalDisplay.textContent = `₹${grandTotal.toFixed(2)}`;
+        };
+
+const renderCartItems = () => {
+    const cart = getLocalStorageItem('cart');
+
+    // First, clear only the cart items but NOT the empty message
+    const allCartItems = cartItemsContainer.querySelectorAll('.cart-item');
+    allCartItems.forEach(item => item.remove());
+
+    if (cart.length === 0) {
+        // Show empty cart message
+        emptyCartMessage.classList.remove('hidden');
+        checkoutBtn.classList.add('pointer-events-none', 'bg-gray-400');
+        clearCartBtn.disabled = true;
+    } else {
+        // Hide empty message
+        emptyCartMessage.classList.add('hidden');
+        checkoutBtn.classList.remove('pointer-events-none', 'bg-gray-400');
+        clearCartBtn.disabled = false;
+        
+        cart.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'cart-item flex items-center justify-between p-4 mb-4 bg-gray-100 rounded-lg shadow-sm opacity-0';
+            itemDiv.setAttribute('data-item-id', item.id);
+
+            const subtotal = item.price * item.quantity;
+            itemDiv.innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <img src="${item.imageUrl}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">${item.name}</h4>
+                        <p class="text-sm text-gray-500">₹${item.price} each</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <button class="quantity-minus-btn bg-gray-200 text-gray-700 font-bold w-8 h-8 rounded-full hover:bg-gray-300 transition-all">-</button>
+                        <span class="quantity-display font-semibold text-lg">${item.quantity}</span>
+                        <button class="quantity-plus-btn bg-gray-200 text-gray-700 font-bold w-8 h-8 rounded-full hover:bg-gray-300 transition-all">+</button>
+                    </div>
+                    <span class="font-bold w-20 text-right">₹${subtotal.toFixed(2)}</span>
+                    <button class="remove-item-btn text-red-500 hover:text-red-700 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            `;
+            cartItemsContainer.appendChild(itemDiv);
+        });
+    }
+
+    // Animate items
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.cart-item').forEach(item => observer.observe(item));
+
+    attachCartEventListeners();
+    calculateTotals(cart);
+    updateCartCount();
+};
+
+        const attachCartEventListeners = () => {
+            document.querySelectorAll('.quantity-minus-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemDiv = e.target.closest('.cart-item');
+                    const itemId = itemDiv.getAttribute('data-item-id');
+                    const quantityDisplay = itemDiv.querySelector('.quantity-display');
+                    let quantity = parseInt(quantityDisplay.textContent, 10);
+                    if (quantity > 1) {
+                        quantity--;
+                        updateCartItem(itemId, quantity);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.quantity-plus-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemDiv = e.target.closest('.cart-item');
+                    const itemId = itemDiv.getAttribute('data-item-id');
+                    const quantityDisplay = itemDiv.querySelector('.quantity-display');
+                    let quantity = parseInt(quantityDisplay.textContent, 10);
+                    quantity++;
+                    updateCartItem(itemId, quantity);
+                });
+            });
+
+            document.querySelectorAll('.remove-item-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemDiv = e.target.closest('.cart-item');
+                    const itemId = itemDiv.getAttribute('data-item-id');
+                    removeCartItem(itemId);
+                });
+            });
+        };
+
+        const updateCartItem = (itemId, quantity) => {
+            const cart = getLocalStorageItem('cart');
+            const itemToUpdate = cart.find(cartItem => cartItem.id === itemId);
+            if (itemToUpdate) {
+                itemToUpdate.quantity = quantity;
+                setLocalStorageItem('cart', cart);
+                renderCartItems();
+            }
+        };
+
+        const removeCartItem = (itemId) => {
+            let cart = getLocalStorageItem('cart');
+            cart = cart.filter(item => item.id !== itemId);
+            setLocalStorageItem('cart', cart);
+            renderCartItems();
+        };
+
+        const clearCart = () => {
+            setLocalStorageItem('cart', []);
+            renderCartItems();
+        };
+        
+        clearCartBtn.addEventListener('click', clearCart);
+        
+        window.addEventListener('load', renderCartItems);
+    </script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bangalore Bites - Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f3e9;
+            color: #333;
+        }
+        .active-nav {
+            border-bottom: 2px solid #e53e3e;
+        }
+    </style>
+</head>
+<body class="bg-[#f7f3e9]">
+    <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center space-x-4">
+            <h1 class="text-2xl font-bold text-red-600">The Bangalore Bites</h1>
+        </div>
+        <nav class="hidden md:flex items-center space-x-6">
+            <a href="menu.html" class="text-gray-600 hover:text-red-600 transition duration-300 font-medium pb-2 nav-link">Menu & Order</a>
+            <a href="cart.html" class="text-gray-600 hover:text-red-600 transition duration-300 font-medium pb-2 nav-link">Cart (<span id="cart-count">0</span>)</a>
+            <a href="reservations.html" class="text-gray-600 hover:text-red-600 transition duration-300 font-medium pb-2 nav-link">Check Reservations</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8 flex flex-col items-center">
+        <section class="text-center py-8">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-red-600 mb-2">Proceed to Checkout</h2>
+            <p class="text-lg text-gray-600">Complete your order with a secure payment.</p>
+        </section>
+
+        <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Order Summary</h3>
+            <div id="checkout-summary" class="space-y-2 text-gray-600 mb-6">
+                <!-- Cart items will be rendered here -->
+            </div>
+            <div class="space-y-2 text-gray-600">
+                <div class="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">₹0.00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Taxes (10%):</span>
+                    <span id="taxes">₹0.00</span>
+                </div>
+                <div class="border-t border-gray-300 my-4 pt-4"></div>
+                <div class="flex justify-between text-xl font-bold text-gray-800">
+                    <span>Grand Total:</span>
+                    <span id="grand-total">₹0.00</span>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold text-gray-800 mt-8 mb-4">Order Type</h3>
+            <div class="flex space-x-4 mb-6">
+                <div class="flex items-center">
+                    <input type="radio" id="deliveryOption" name="orderType" value="delivery" class="text-red-600 focus:ring-red-500" checked>
+                    <label for="deliveryOption" class="ml-2 font-medium text-gray-700">Delivery / Takeout</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="radio" id="reservationOption" name="orderType" value="reservation" class="text-red-600 focus:ring-red-500">
+                    <label for="reservationOption" class="ml-2 font-medium text-gray-700">Table Reservation</label>
+                </div>
+            </div>
+
+            <div id="delivery-details">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Payment Details</h3>
+                <form id="payment-form" class="space-y-4" autocomplete="off">
+                    <div>
+                        <label for="cardHolder" class="block text-sm font-medium text-gray-700">Card Holder Name</label>
+                        <input type="text" id="cardHolder" name="cardHolder" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" placeholder="Full Name" required autocomplete="off">
+                    </div>
+                    <div>
+                        <label for="cardNumber" class="block text-sm font-medium text-gray-700">Card Number</label>
+                        <input type="text" id="cardNumber" name="cardNumber" maxlength="19" inputmode="numeric"
+       pattern="(?:\d{4}\s?){4}" placeholder="XXXX XXXX XXXX XXXX" required>
+
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <label for="expiry" class="block text-sm font-medium text-gray-700">Expiration Date</label>
+                            <input type="text" id="expiry" name="expiry" maxlength="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" placeholder="MM/YY" required autocomplete="off">
+                        </div>
+                        <div class="flex-1">
+                            <label for="cvc" class="block text-sm font-medium text-gray-700">CVC</label>
+                            <input type="password" id="cvc" name="cvc" maxlength="3" inputmode="numeric" pattern="\d{3}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" placeholder="XXX" required autocomplete="off">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-red-600 text-white font-semibold py-3 rounded-full shadow-md transition-all hover:bg-red-700">
+                        Pay Now
+                    </button>
+                </form>
+            </div>
+
+            <div id="reservation-details" class="hidden">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Reservation Details</h3>
+                <p class="text-gray-600 mb-4">Your order will be prepared for your table reservation. Payment will be processed at the restaurant.</p>
+                <form id="reservation-form" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" required>
+                    </div>
+                    <div>
+                        <label for="guests" class="block text-sm font-medium text-gray-700">Number of Guests</label>
+                        <input type="number" id="guests" name="guests" min="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" required>
+                    </div>
+                    <div>
+                        <label for="reservationTime" class="block text-sm font-medium text-gray-700">Desired Time</label>
+                        <input type="time" id="reservationTime" name="reservationTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" required>
+                    </div>
+                    <button type="submit" class="w-full bg-red-600 text-white font-semibold py-3 rounded-full shadow-md transition-all hover:bg-red-700">
+                        Confirm Reservation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+        <div class="container mx-auto">
+            <p>&copy; 2024 The Bangalore Bites. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const getLocalStorageItem = (key) => {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : [];
+        };
+
+        const setLocalStorageItem = (key, data) => {
+            localStorage.setItem(key, JSON.stringify(data));
+        };
+        
+        const updateCartCount = () => {
+            const cart = getLocalStorageItem('cart');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        };
+        
+        const renderOrderSummary = () => {
+            const cart = getLocalStorageItem('cart');
+            const summaryContainer = document.getElementById('checkout-summary');
+            const subtotalDisplay = document.getElementById('subtotal');
+            const taxesDisplay = document.getElementById('taxes');
+            const grandTotalDisplay = document.getElementById('grand-total');
+
+            summaryContainer.innerHTML = '';
+            if (cart.length === 0) {
+                summaryContainer.innerHTML = '<p class="text-center text-gray-500">Your cart is empty. Please add items to proceed.</p>';
+            } else {
+                cart.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center';
+                    itemDiv.innerHTML = `
+                        <p class="font-medium text-gray-800">${item.name} <span class="text-sm text-gray-500">(${item.quantity} x ₹${item.price})</span></p>
+                        <span class="font-bold">₹${(item.price * item.quantity).toFixed(2)}</span>
+                    `;
+                    summaryContainer.appendChild(itemDiv);
+                });
+            }
+
+            let subtotal = 0;
+            cart.forEach(item => subtotal += item.price * item.quantity);
+            const taxes = subtotal * 0.10;
+            const grandTotal = subtotal + taxes;
+
+            subtotalDisplay.textContent = `₹${subtotal.toFixed(2)}`;
+            taxesDisplay.textContent = `₹${taxes.toFixed(2)}`;
+            grandTotalDisplay.textContent = `₹${grandTotal.toFixed(2)}`;
+        };
+        
+        const deliveryDetails = document.getElementById('delivery-details');
+        const reservationDetails = document.getElementById('reservation-details');
+        const deliveryOption = document.getElementById('deliveryOption');
+        const reservationOption = document.getElementById('reservationOption');
+        
+        deliveryOption.addEventListener('change', () => {
+            deliveryDetails.classList.remove('hidden');
+            reservationDetails.classList.add('hidden');
+        });
+
+        reservationOption.addEventListener('change', () => {
+            deliveryDetails.classList.add('hidden');
+            reservationDetails.classList.remove('hidden');
+        });
+
+        // --- Payment Form Constraints and Validation ---
+        const cardNumberInput = document.getElementById('cardNumber');
+        const expiryInput = document.getElementById('expiry');
+        const cvcInput = document.getElementById('cvc');
+        const cardHolderInput = document.getElementById('cardHolder');
+
+        // Card number: only digits, auto-format as XXXX XXXX XXXX XXXX, max 16 digits
+        cardNumberInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 16) value = value.slice(0, 16);
+            let formatted = value.replace(/(.{4})/g, '$1 ').trim();
+            e.target.value = formatted;
+        });
+
+        cardNumberInput.addEventListener('blur', (e) => {
+            // Remove spaces for validation
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length !== 16) {
+                e.target.setCustomValidity('Card number must be exactly 16 digits.');
+            } else {
+                e.target.setCustomValidity('');
+            }
+        });
+
+        // Expiry: MM/YY, auto-insert '/', valid month and year
+        expiryInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/[^\d]/g, '');
+            if (value.length > 4) value = value.slice(0, 4);
+            if (value.length > 2) {
+                value = value.slice(0,2) + '/' + value.slice(2);
+            }
+            e.target.value = value;
+        });
+
+        expiryInput.addEventListener('blur', (e) => {
+    const val = e.target.value;
+    const match = val.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+    if (!match) {
+        e.target.setCustomValidity('Expiry must be in MM/YY format and valid.');
+    } else {
+        const now = new Date();
+        const inputMonth = parseInt(match[1], 10);
+        const inputYear = 2000 + parseInt(match[2], 10);
+
+        // Expiry at end of entered month
+        const expiryDate = new Date(inputYear, inputMonth);
+        expiryDate.setDate(0);
+
+        if (expiryDate < now) {
+            e.target.setCustomValidity('Card has expired.');
+        } else {
+            e.target.setCustomValidity('');
+        }
+    }
+});
+
+        // CVC: only 3 digits, masked
+        cvcInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 3) value = value.slice(0, 3);
+            e.target.value = value;
+        });
+
+        cvcInput.addEventListener('blur', (e) => {
+            if (!/^\d{3}$/.test(e.target.value)) {
+                e.target.setCustomValidity('CVC must be exactly 3 digits.');
+            } else {
+                e.target.setCustomValidity('');
+            }
+        });
+
+        // Card Holder: required, only letters and spaces
+        cardHolderInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+            e.target.value = value;
+        });
+
+        document.getElementById('payment-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Validate all fields before proceeding
+            if (!cardHolderInput.value.trim()) {
+                cardHolderInput.setCustomValidity('Card holder name is required.');
+                cardHolderInput.reportValidity();
+                return;
+            } else {
+                cardHolderInput.setCustomValidity('');
+            }
+            if (cardNumberInput.value.replace(/\D/g, '').length !== 16) {
+                cardNumberInput.setCustomValidity('Card number must be exactly 16 digits.');
+                cardNumberInput.reportValidity();
+                return;
+            } else {
+                cardNumberInput.setCustomValidity('');
+            }
+            const expiryVal = expiryInput.value;
+            const match = expiryVal.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+            if (!match) {
+                expiryInput.setCustomValidity('Expiry must be in MM/YY format and valid.');
+                expiryInput.reportValidity();
+                return;
+            } else {
+                // Optionally check if expired
+                const now = new Date();
+                const inputMonth = parseInt(match[1], 10);
+                const inputYear = 2000 + parseInt(match[2], 10);
+                const expiryDate = new Date(inputYear, inputMonth);
+                if (expiryDate <= now) {
+                    expiryInput.setCustomValidity('Card has expired.');
+                    expiryInput.reportValidity();
+                    return;
+                } else {
+                    expiryInput.setCustomValidity('');
+                }
+            }
+            if (!/^\d{3}$/.test(cvcInput.value)) {
+                cvcInput.setCustomValidity('CVC must be exactly 3 digits.');
+                cvcInput.reportValidity();
+                return;
+            } else {
+                cvcInput.setCustomValidity('');
+            }
+
+            // Gather order details
+            const cart = getLocalStorageItem('cart');
+            let subtotal = 0;
+            cart.forEach(item => subtotal += item.price * item.quantity);
+            const taxes = subtotal * 0.10;
+            const grandTotal = subtotal + taxes;
+            const order = {
+                id: Date.now(),
+                items: JSON.stringify(cart),
+                subtotal: subtotal,
+                taxes: taxes,
+                grandTotal: grandTotal,
+                status: 'Delivered',
+                timestamp: new Date().toISOString()
+            };
+            // Save to localStorage 'orders'
+            const orders = getLocalStorageItem('orders');
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            const messageBox = document.createElement('div');
+            messageBox.className = 'fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50';
+            messageBox.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+                    <p class="text-xl font-semibold mb-4 text-gray-800">Order Placed Successfully!</p>
+                    <p class="text-gray-600 mb-6">Thank you for your order. Your food will be ready for pickup or delivery soon.</p>
+                    <button id="close-modal" class="bg-red-600 text-white font-medium py-2 px-6 rounded-full hover:bg-red-700 transition">Continue</button>
+                </div>
+            `;
+            document.body.appendChild(messageBox);
+
+            localStorage.removeItem('cart');
+
+            document.getElementById('close-modal').addEventListener('click', () => {
+                messageBox.remove();
+                window.location.href = 'ordering.html';
+            });
+        });
+        
+        document.getElementById('reservation-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const guests = document.getElementById('guests').value;
+            const time = document.getElementById('reservationTime').value;
+
+            // Save reservation details to local storage
+            const reservations = getLocalStorageItem('reservations');
+            reservations.push({ name, guests, time });
+            setLocalStorageItem('reservations', reservations);
+            
+            const messageBox = document.createElement('div');
+            messageBox.className = 'fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50';
+            messageBox.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+                    <p class="text-xl font-semibold mb-4 text-gray-800">Reservation Confirmed!</p>
+                    <p class="text-gray-600 mb-6">Thank you for your reservation. We look forward to seeing you at the restaurant!</p>
+                    <button id="close-modal-res" class="bg-red-600 text-white font-medium py-2 px-6 rounded-full hover:bg-red-700 transition">Continue</button>
+                </div>
+            `;
+            document.body.appendChild(messageBox);
+
+            localStorage.removeItem('cart');
+
+            document.getElementById('close-modal-res').addEventListener('click', () => {
+                messageBox.remove();
+                window.location.href = 'menu.html';
+            });
+        });
+
+        window.addEventListener('load', () => {
+            renderOrderSummary();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bangalore Bites - Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f7f3e9;
+            color: #333;
+        }
+
+        .active-nav {
+            border-bottom: 2px solid #e53e3e;
+        }
+
+        .menu-item.animate-in {
+            animation: fadeIn 0.8s forwards;
+        }
+
+        header {
+            width: 100%;
+            height: 5.5em;
+            background-color: rgb(2, 24, 0);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .logo-area {
+            height: max-content;
+            width: 50%;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin-left: 2em;
+        }
+        .logo{
+            height: 5em;
+            width: 50%;
+            background-image: url("images/homepage/logo.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .nav-area {
+            height: max-content;
+            width: 40%;
+        }
+        .nav-options {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        .nav {
+            font-family: 'Times New Roman', Times, serif;
+            color: #dfc9c2;
+            font-size: 1.1em;
+            padding: 1em 1em;
+            transition: all 0.3s ease;
+        }
+        .nav:hover {
+            border: 1px solid white;
+        }
+
+        .search-filter-section {
+            margin: 3rem auto;
+            text-align: center;
+        }
+        #menuSearch {
+            width: 100%;
+            max-width: 32rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            border-radius: 9999px;
+            border: 2px solid #d1d5db;
+            outline: none;
+            text-align: center;
+            transition: border-color 0.15s ease-in-out;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        #menuSearch:focus {
+            border-color: #e35a16;
+        }
+        .filter-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .filter-btn {
+            background-color: #d1d5db;
+            color: #374151;
+            font-weight: bold;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.2s ease-in-out;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .filter-btn:hover {
+            background-color: #9ca3af;
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background-color: rgb(233, 105, 105);
+            color: rgb(255, 250, 250);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background-color: rgb(0, 49, 3);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 2rem;
+            text-align: center;
+}
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo">
+            </div>
+        </div>
+        <div class="nav-area">
+            <div class="nav-options">
+                <a href="homepage.html" class="nav" id="home" target="_self">Home</a>
+                <a href="menu.html" class="nav" id="home" target="_self">Menu</a>
+                <a href="ordering.html" class="nav" id="menu" target="_self" style="text-decoration: underline 3px; text-underline-offset: 6px">Orders</a>
+                <a href="cart.html" class="nav">Cart (<span id="cart-count">0</span>)</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section class="text-center py-8">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-red-600 mb-2">Explore Our Delicious Menu</h2>
+            <p class="text-lg text-gray-600">Order online to experience the best of Bangalore's flavors.</p>
+        </section>
+
+        <section class="search-filter-section">
+            <input type="text" id="menuSearch" placeholder="Search for a dish..." />
+            <div class="filter-buttons-container">
+                <button data-filter-type="category" data-filter-value="all" class="filter-btn active">All</button>
+                <button data-filter-type="category" data-filter-value="starters" class="filter-btn">Starters</button>
+                <button data-filter-type="category" data-filter-value="main-course" class="filter-btn">Main Course</button>
+                <button data-filter-type="category" data-filter-value="desserts-beverages" class="filter-btn">Desserts & Beverages</button>
+                <button data-filter-type="diet" data-filter-value="veg" class="filter-btn">Veg</button>
+                <button data-filter-type="diet" data-filter-value="non-veg" class="filter-btn">Non-Veg</button>
+            </div>
+        </section>
+
+        <section class="menu-section mt-8">
+            <div id="menu-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+    </footer>
+
+<script>
+    const menuItemsContainer = document.getElementById('menu-items-container');
+    const searchInput = document.getElementById('menuSearch');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cartCountDisplay = document.getElementById('cart-count');
+
+    const menuItems = [
+        { id: '1', name: 'Paneer Tikka', price: 249, category: 'starters', diet: 'veg', imageUrl: 'images/menu/paneer.jpg' },
+        { id: '2', name: 'Spicy Chicken 65', price: 299, category: 'starters', diet: 'non-veg', imageUrl: 'images/menu/chicken65.jpg' },
+        { id: '3', name: 'Gobi Manchurian', price: 179, category: 'starters', diet: 'veg', imageUrl: 'images/menu/gobi.webp' },
+        { id: '4', name: 'Onion Pakoda', price: 119, category: 'starters', diet: 'veg', imageUrl: 'images/menu/onion.jpg' },
+        { id: '5', name: 'Chicken Momos', price: 199, category: 'starters', diet: 'non-veg', imageUrl: 'images/menu/momo.jpeg' },
+        { id: '6', name: 'Hyderabadi Chicken Biryani', price: 399, category: 'main-course', diet: 'non-veg', imageUrl: 'images/menu/biryani.jpg' },
+        { id: '7', name: 'Classic South Indian Thali', price: 279, category: 'main-course', diet: 'veg', imageUrl: 'images/menu/thali.jpg' },
+        { id: '8', name: 'Butter Chicken', price: 349, category: 'main-course', diet: 'non-veg', imageUrl: 'images/menu/butterchicken.jpg' },
+        { id: '9', name: 'Dal Makhani', price: 229, category: 'main-course', diet: 'veg', imageUrl: 'images/menu/dal.jpg' },
+        { id: '10', name: 'Chicken Steak', price: 429, category: 'main-course', diet: 'non-veg', imageUrl: 'images/menu/steak.jpg' },
+        { id: '11', name: 'Masala Dosa', price: 129, category: 'breads-sides', diet: 'veg', imageUrl: 'images/menu/dosa.webp' },
+        { id: '12', name: 'Garlic Naan', price: 79, category: 'breads-sides', diet: 'veg', imageUrl: 'images/menu/naan.jpg' },
+        { id: '13', name: 'Thatte Idli', price: 99, category: 'breads-sides', diet: 'veg', imageUrl: 'images/menu/idli.webp' },
+        { id: '14', name: 'Gulab Jamun', price: 89, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/jamun.webp' },
+        { id: '15', name: 'Mysore Pak', price: 99, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/pak.jpg' },
+        { id: '16', name: 'Rasmalai', price: 109, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/rasmalai.jpg' },
+        { id: '17', name: 'Gajar ka Halwa', price: 149, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/halwa.jpg' },
+        { id: '18', name: 'Bangalore Filter Coffee', price: 69, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/coffee.webp' },
+        { id: '19', name: 'Mango Lassi', price: 119, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/lassi.webp' },
+        { id: '20', name: 'Badam Milk', price: 89, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/badam.jpg' },
+        { id: '21', name: 'Jal Jeera', price: 59, category: 'desserts-beverages', diet: 'veg', imageUrl: 'images/menu/jaljeera.webp' },
+    ];
+
+    const getLocalStorageItem = (key) => {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : [];
+    };
+
+    const setLocalStorageItem = (key, data) => {
+        localStorage.setItem(key, JSON.stringify(data));
+    };
+
+    const updateCartCount = () => {
+        const cart = getLocalStorageItem('cart');
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountDisplay.textContent = totalItems;
+    };
+
+    const renderMenuItems = (filteredItems) => {
+        menuItemsContainer.innerHTML = '';
+        const cart = getLocalStorageItem('cart');
+        filteredItems.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'menu-item bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 opacity-0';
+            itemDiv.setAttribute('data-category', item.category);
+            itemDiv.setAttribute('data-diet', item.diet);
+            itemDiv.setAttribute('data-item-id', item.id);
+
+            const existingCartItem = cart.find(cartItem => cartItem.id === item.id);
+            const buttonText = existingCartItem ? 'Added to Cart' : 'Add to Cart';
+            const buttonClass = existingCartItem ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700';
+            const buttonDisabled = existingCartItem ? 'disabled' : '';
+
+            const quantityDisabled = existingCartItem ? '' : 'disabled';
+            const initialQuantity = existingCartItem ? existingCartItem.quantity : 0;
+
+            itemDiv.innerHTML = `
+                <div class="relative w-full mb-4 rounded-lg overflow-hidden">
+                    <img src="${item.imageUrl}" alt="${item.name}" class="w-full h-48 object-cover rounded-lg">
+                </div>
+                <h5 class="text-xl font-bold text-gray-800">${item.name}</h5>
+                <p class="text-2xl font-extrabold text-red-600 mb-4">₹${item.price}</p>
+                <div class="flex items-center justify-center space-x-2">
+                    <button class="quantity-minus-btn bg-gray-200 text-gray-700 font-bold w-10 h-10 rounded-full hover:bg-gray-300 transition-all" ${quantityDisabled}>-</button>
+                    <span class="quantity-display font-semibold text-lg w-10 text-center">${initialQuantity}</span>
+                    <button class="quantity-plus-btn bg-gray-200 text-gray-700 font-bold w-10 h-10 rounded-full hover:bg-gray-300 transition-all" ${quantityDisabled}>+</button>
+                </div>
+                <button class="add-to-cart-btn ${buttonClass} text-white font-semibold py-3 px-6 rounded-full shadow-md transition mt-4 w-full" ${buttonDisabled}>${buttonText}</button>
+            `;
+            menuItemsContainer.appendChild(itemDiv);
+        });
+
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const itemDiv = e.target.closest('.menu-item');
+                const itemId = itemDiv.getAttribute('data-item-id');
+                const selectedItem = menuItems.find(item => item.id === itemId);
+
+                let quantity = parseInt(itemDiv.querySelector('.quantity-display').textContent, 10);
+                if (quantity === 0) {
+                    quantity = 1;
+                }
+
+                addToCart(selectedItem, quantity);
+
+                e.target.textContent = 'Added to Cart';
+                e.target.disabled = true;
+                e.target.classList.remove('bg-red-600', 'hover:bg-red-700');
+                e.target.classList.add('bg-green-600', 'hover:bg-green-700');
+
+                itemDiv.querySelector('.quantity-minus-btn').removeAttribute('disabled');
+                itemDiv.querySelector('.quantity-plus-btn').removeAttribute('disabled');
+                itemDiv.querySelector('.quantity-display').textContent = '1';
+            });
+        });
+
+        document.querySelectorAll('.quantity-minus-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const itemDiv = e.target.closest('.menu-item');
+                const quantityDisplay = itemDiv.querySelector('.quantity-display');
+                let quantity = parseInt(quantityDisplay.textContent, 10);
+                if (quantity > 1) {
+                    quantity--;
+                    quantityDisplay.textContent = quantity;
+                    updateCart(itemDiv.getAttribute('data-item-id'), quantity);
+                }
+            });
+        });
+
+        document.querySelectorAll('.quantity-plus-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const itemDiv = e.target.closest('.menu-item');
+                const quantityDisplay = itemDiv.querySelector('.quantity-display');
+                let quantity = parseInt(quantityDisplay.textContent, 10);
+                quantity++;
+                quantityDisplay.textContent = quantity;
+                updateCart(itemDiv.getAttribute('data-item-id'), quantity);
+            });
+        });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.menu-item').forEach(item => observer.observe(item));
+    };
+
+    const addToCart = (item, quantity) => {
+        const cart = getLocalStorageItem('cart');
+        const existingItem = cart.find(cartItem => cartItem.id === item.id);
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            cart.push({ ...item, quantity: quantity });
+        }
+        setLocalStorageItem('cart', cart);
+        updateCartCount();
+    };
+
+    const updateCart = (itemId, quantity) => {
+        const cart = getLocalStorageItem('cart');
+        const itemToUpdate = cart.find(cartItem => cartItem.id === itemId);
+        if (itemToUpdate) {
+            itemToUpdate.quantity = quantity;
+            setLocalStorageItem('cart', cart);
+            updateCartCount();
+        }
+    };
+
+    let selectedCategory = "all";
+    let selectedDiet = "all";
+    let searchTerm = "";
+
+    const applyFilters = () => {
+        let filtered = menuItems;
+
+        if (selectedCategory !== "all") {
+            filtered = filtered.filter(item => item.category === selectedCategory);
+        }
+        if (selectedDiet !== "all") {
+            filtered = filtered.filter(item => item.diet === selectedDiet);
+        }
+        if (searchTerm.trim() !== "") {
+            filtered = filtered.filter(item => item.name.toLowerCase().includes(searchTerm));
+        }
+
+        renderMenuItems(filtered);
+    };
+
+    window.addEventListener('load', () => {
+        renderMenuItems(menuItems);
+        updateCartCount();
+    });
+
+    searchInput.addEventListener('input', (e) => {
+        searchTerm = e.target.value.toLowerCase();
+        applyFilters();
+    });
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const filterType = e.target.dataset.filterType;
+            const filterValue = e.target.dataset.filterValue;
+
+            if (filterType === "category") {
+                selectedCategory = filterValue;
+                document.querySelectorAll('.filter-btn[data-filter-type="category"]').forEach(btn => btn.classList.remove('active'));
+            }
+            if (filterType === "diet") {
+                selectedDiet = filterValue;
+                document.querySelectorAll('.filter-btn[data-filter-type="diet"]').forEach(btn => btn.classList.remove('active'));
+            }
+
+            e.target.classList.add("active");
+            applyFilters();
+        });
+    });
+</script>
+
+</body>
+</html>

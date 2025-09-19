@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bangalore Bites - Reserve Table</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        a{
+            text-decoration: none;
+        }
+
+        header{
+            width: 100%;
+            height: 5.5em;
+            background-color: rgb(2, 24, 0);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .logo-area{
+            height: max-content;
+            width: 50%;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin-left: 2em;
+        }
+
+        .logo{
+            height: 5em;
+            width: 50%;
+            background-image: url("images/homepage/logo.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .nav-area{
+            height: max-content;
+            width: 30em;
+        }
+
+        .nav-options{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .nav{
+            color: #dfc9c2;
+            font-size: 1.1em;
+            padding: 1em 1em;
+        }
+
+        .nav:hover{
+            border: 1px solid white;
+        }
+
+        body {
+            background-color: #f7f3e9;
+            color: #333;
+        }
+        .active-nav {
+            border-bottom: 2px solid #e53e3e;
+        }
+        .footer {
+            background-color: rgb(0, 49, 3);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-[#f7f3e9]">
+
+    <header>
+        <div class="logo-area">
+            <div class="logo">
+            </div>
+        </div>
+        <div class="nav-area">
+            <div class="nav-options">
+                <a href="homepage.html" class="nav">Home</a>
+                <a href="menu.html" class="nav">Menu</a>
+                <a href="reservations.html" class="nav">Check Reservations</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8 flex flex-col items-center">
+        <section class="text-center py-8">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-red-600 mb-2">Reserve a Table</h2>
+            <p class="text-lg text-gray-600">Fill in the details below to book your table.</p>
+        </section>
+
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+            <form id="reservation-form" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                </div>
+                <div>
+                    <label for="guests" class="block text-sm font-medium text-gray-700">Number of Guests</label>
+                    <input type="number" id="guests" name="guests" required min="1" max="10" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                </div>
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                    <input type="date" id="date" name="date" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                </div>
+                <div>
+                    <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+                    <input type="time" id="time" name="time" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                </div>
+                <button type="submit" class="w-full bg-red-600 text-white font-semibold py-3 rounded-full shadow-md transition-all hover:bg-red-700">
+                    Book Table
+                </button>
+            </form>
+            <div id="confirmation-message" class="hidden mt-4 text-center text-green-600 font-semibold">
+                Your reservation has been successfully booked!
+            </div>
+        </div>
+    </main>
+
+    <footer classb="footer">
+    </footer>
+
+    <script>
+        const getLocalStorageItem = (key) => {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : [];
+        };
+
+        const setLocalStorageItem = (key, data) => {
+            localStorage.setItem(key, JSON.stringify(data));
+        };
+        
+        const updateCartCount = () => {
+            const cart = getLocalStorageItem('cart');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        };
+
+        document.getElementById('reservation-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const reservation = {
+                name: form.name.value,
+                guests: form.guests.value,
+                date: form.date.value,
+                time: form.time.value
+            };
+            
+            const reservations = getLocalStorageItem('reservations');
+            reservations.push(reservation);
+            setLocalStorageItem('reservations', reservations);
+
+            document.getElementById('confirmation-message').classList.remove('hidden');
+            form.reset();
+        });
+        
+        window.addEventListener('load', () => {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

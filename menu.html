@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - The Bangalore Bites</title>
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo">
+            </div>
+        </div>
+        <div class="nav-area">
+            <div class="nav-options">
+                <a href="homepage.html" class="nav" id="home" target="_self">Home</a>
+                <a href="menu.html" class="nav" id="menu" target="_self" style="text-decoration: underline 3px; text-underline-offset: 6px">Menu</a>
+                <a href="ordering.html" class="nav" id="contact">Order</a>
+                <a href="reservations.html" class="nav">Reservations</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-8">
+
+        <section class="hero-section">
+            <div class="hero-text-area">
+                <h2 class="hero-title">
+                    Explore Our Delicious Menu
+                </h2>
+                <p class="hero-subtitle1">
+                    Discover the rich flavors of Bangalore, served with a modern touch. From sizzling starters to hearty mains, every bite is crafted to delight.
+                </p>
+                <p class="hero-subtitle2">
+                    Order online or book a table to experience the best of Bangalore's flavors.
+                </p>
+                <div class="hero-buttons">
+                    <a href="ordering.html" id="onlineOrderBtn" class="hero-button">
+                        Order Online
+                    </a>
+                    <a href="reservetable.html" id="bookTableBtn" class="hero-button">
+                        Book a Table
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image-area">
+                 <img src="images/menu/payasam.webp" alt="Delicious Food Platter" class="hero-image" />
+            </div>
+        </section>
+        
+        <div class="separation-area">
+            <div class="separation"></div>
+        </div>
+        
+        <h3 class="section-title">Our Culinary Delights</h3>
+        <section class="search-filter-section">
+            <input type="text" id="menuSearch" placeholder="Search for a dish..." />
+            <div class="filter-buttons-container">
+                <button data-filter-type="category" data-filter-value="all" class="filter-btn active">All</button>
+                <button data-filter-type="category" data-filter-value="starters" class="filter-btn">Starters</button>
+                <button data-filter-type="category" data-filter-value="main-course" class="filter-btn">Main Course</button>
+                <button data-filter-type="category" data-filter-value="desserts" class="filter-btn">Desserts & Beverages</button>
+                <button data-filter-type="diet" data-filter-value="veg" class="filter-btn">Veg</button>
+                <button data-filter-type="diet" data-filter-value="non-veg" class="filter-btn">Non-Veg</button>
+            </div>
+        </section>
+
+        <section class="menu-section mt-16">
+
+            <div id="menu-items-container" class="menu-grid">
+                <div class="menu-item" data-category="starters" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/paneer.jpg" alt="Paneer Tikka" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Paneer Tikka</h5>
+                            </div>
+                            <p class="item-description">Soft cottage cheese cubes marinated in a spiced yogurt blend and grilled to perfection.</p>
+                            <p class="item-price">₹249</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters" data-diet="non-veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/chicken65.jpg" alt="Spicy Chicken 65" class="item-image">
+                            <div class="non-veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Spicy Chicken 65</h5>
+                            </div>
+                            <p class="item-description">A fiery and flavorful deep-fried chicken appetizer, a signature dish from South India.</p>
+                            <p class="item-price">₹299</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/gobi.webp" alt="Gobi Manchurian" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Gobi Manchurian</h5>
+                            </div>
+                            <p class="item-description">Crispy, battered cauliflower florets tossed in a spicy and tangy Indo-Chinese sauce.</p>
+                            <p class="item-price">₹179</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/onion.jpg" alt="Onion Pakoda" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Onion Pakoda</h5>
+                            </div>
+                            <p class="item-description">Thinly sliced onions coated in a spiced gram flour batter and deep-fried until golden and crispy.</p>
+                            <p class="item-price">₹119</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="starters" data-diet="non-veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/momo.jpeg" alt="Momos" class="item-image">
+                            <div class="non-veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Chicken Momos</h5>
+                            </div>
+                            <p class="item-description">Steamed dumplings filled with savory minced chicken, served with a spicy dipping sauce.</p>
+                            <p class="item-price">₹199</p>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Main Course -->
+                <div class="menu-item" data-category="main-course" data-diet="non-veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/biryani.jpg" alt="Hyderabadi Chicken Biryani" class="item-image">
+                            <div class="non-veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Hyderabadi Chicken Biryani</h5>
+                            </div>
+                            <p class="item-description">A fragrant and aromatic rice dish layered with marinated chicken, saffron, and whole spices.</p>
+                            <p class="item-price">₹399</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/thali.jpg" alt="Classic South Indian Thali" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Classic South Indian Thali</h5>
+                            </div>
+                            <p class="item-description">A wholesome meal with a variety of vegetarian curries, lentil soup, rice, and traditional bread.</p>
+                            <p class="item-price">₹279</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-diet="non-veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/butterchicken.jpg" alt="Butter Chicken" class="item-image">
+                            <div class="non-veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Butter Chicken</h5>
+                            </div>
+                            <p class="item-description">Tender chicken pieces cooked in a rich, creamy tomato gravy with a hint of fenugreek leaves.</p>
+                            <p class="item-price">₹349</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/dal.jpg" alt="Dal Makhani" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Dal Makhani</h5>
+                            </div>
+                            <p class="item-description">A classic North Indian dish of black lentils and kidney beans slow-cooked in a rich, creamy sauce.</p>
+                            <p class="item-price">₹229</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-diet="non-veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/steak.jpg" alt="Chicken Steak" class="item-image">
+                            <div class="non-veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Chicken Steak</h5>
+                            </div>
+                            <p class="item-description">A tender chicken breast grilled to perfection, seasoned with herbs and spices, and served with a choice of sides.</p>
+                            <p class="item-price">₹429</p>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Breads & Sides -->
+                <div class="menu-item" data-category="main-course" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/dosa.webp" alt="Masala Dosa" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Masala Dosa</h5>
+                            </div>
+                            <p class="item-description">A crispy, golden crepe filled with a savory potato mixture, served with chutney and sambar.</p>
+                            <p class="item-price">₹129</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/naan.jpg" alt="Garlic Naan" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Garlic Naan</h5>
+                            </div>
+                            <p class="item-description">Soft, leavened flatbread brushed with fresh garlic and butter, perfect for scooping up curries.</p>
+                            <p class="item-price">₹79</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="main-course" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/idli.webp" alt="Thatte Idli" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Thatte Idli</h5>
+                            </div>
+                            <p class="item-description">A larger, flatter, and incredibly soft version of the classic idli, often served with a fiery chutney or sambar.</p>
+                            <p class="item-price">₹99</p>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Desserts & Beverages -->
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/jamun.webp" alt="Gulab Jamun" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Gulab Jamun</h5>
+                            </div>
+                            <p class="item-description">Soft, deep-fried dumplings soaked in a fragrant rose syrup.</p>
+                            <p class="item-price">₹89</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/pak.jpg" alt="Mysore Pak" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Mysore Pak</h5>
+                            </div>
+                            <p class="item-description">A traditional South Indian sweet made from gram flour, sugar, and ghee that melts in your mouth.</p>
+                            <p class="item-price">₹99</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/rasmalai.jpg" alt="Rasmalai" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Rasmalai</h5>
+                            </div>
+                            <p class="item-description">Soft, spongy cottage cheese patties soaked in a sweetened, thickened milk infused with cardamom and saffron.</p>
+                            <p class="item-price">₹109</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/halwa.jpg" alt="Gajar ka Halwa" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Gajar ka Halwa</h5>
+                            </div>
+                            <p class="item-description">A rich, carrot-based dessert cooked with milk, sugar, and dry fruits, especially popular in winter.</p>
+                            <p class="item-price">₹149</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/coffee.webp" alt="Bangalore Filter Coffee" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Bangalore Filter Coffee</h5>
+                            </div>
+                            <p class="item-description">A strong and aromatic South Indian coffee, served in the traditional style.</p>
+                            <p class="item-price">₹69</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/lassi.webp" alt="Mango Lassi" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Mango Lassi</h5>
+                            </div>
+                            <p class="item-description">A refreshing yogurt-based drink blended with ripe mango pulp.</p>
+                            <p class="item-price">₹119</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/badam.jpg" alt="Badam Milk" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Badam Milk</h5>
+                            </div>
+                            <p class="item-description">A comforting and nutritious warm milk drink flavored with saffron and crushed almonds.</p>
+                            <p class="item-price">₹89</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item" data-category="desserts" data-diet="veg">
+                    <div class="flex-row items-start" style="gap: 1rem; width: 100%;">
+                        <div class="item-image-container">
+                            <img src="images/menu/jaljeera.webp" alt="Jal Jeera" class="item-image">
+                            <div class="veg-marker"></div>
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name-price-row">
+                                <h5 class="item-name">Jal Jeera</h5>
+                            </div>
+                            <p class="item-description">A tangy and spicy lemonade made with cumin, mint, and black salt, great for digestion.</p>
+                            <p class="item-price">₹59</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 The Bangalore Bites. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('menuSearch');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        menuItems.forEach(item => {
+            observer.observe(item);
+        });
+
+        function updateMenuDisplay() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeCategoryFilters = Array.from(document.querySelectorAll('.filter-btn[data-filter-type="category"].active')).map(btn => btn.getAttribute('data-filter-value'));
+            const activeDietFilters = Array.from(document.querySelectorAll('.filter-btn[data-filter-type="diet"].active')).map(btn => btn.getAttribute('data-filter-value'));
+            
+            menuItems.forEach(item => {
+                const itemName = item.querySelector('.item-name').textContent.toLowerCase();
+                const itemCategory = item.getAttribute('data-category');
+                const itemDiet = item.getAttribute('data-diet');
+
+                const matchesSearch = itemName.includes(searchTerm);
+                
+                let matchesCategory = false;
+                if (activeCategoryFilters.includes('all') || activeCategoryFilters.length === 0) {
+                    matchesCategory = true;
+                } else {
+                    matchesCategory = activeCategoryFilters.includes(itemCategory);
+                }
+
+                const matchesDiet = activeDietFilters.length === 0 || activeDietFilters.includes(itemDiet);
+
+                if (matchesSearch && matchesCategory && matchesDiet) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filterType = button.getAttribute('data-filter-type');
+                const filterValue = button.getAttribute('data-filter-value');
+                
+                if (filterType === 'category') {
+                     document.querySelectorAll('.filter-btn[data-filter-type="category"]').forEach(btn => btn.classList.remove('active'));
+                     button.classList.add('active');
+                } else {
+                    button.classList.toggle('active');
+                }
+
+                const activeCategoryFilters = Array.from(document.querySelectorAll('.filter-btn[data-filter-type="category"].active'));
+                if (activeCategoryFilters.length === 0) {
+                     document.querySelector('.filter-btn[data-filter-value="all"]').classList.add('active');
+                }
+                
+                updateMenuDisplay();
+            });
+        });
+
+        searchInput.addEventListener('input', updateMenuDisplay);
+        window.addEventListener('load', updateMenuDisplay);
+    </script>
+</body>
+</html>
